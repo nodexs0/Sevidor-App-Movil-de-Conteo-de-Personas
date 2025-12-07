@@ -9,6 +9,7 @@ from ultralytics import YOLO
 from roboflow import Roboflow
 from fastapi.middleware.cors import CORSMiddleware
 
+
 app = FastAPI()
 
 app.add_middleware(
@@ -124,7 +125,7 @@ async def predict_doors(file: UploadFile = File(...), debug: bool = Query(False)
 
 @app.get("/")
 async def root():
-    return {"message": "Servidor de detección de personas (COCO) y puertas (Roboflow) funcionando"}
+    return {"message": "Servidor de detección de personas (Yolov8m) y puertas (Roboflow) funcionando"}
 
 if __name__ == "__main__":
     print("[logs] Iniciando servidor...") 

@@ -85,7 +85,7 @@ class PersonDetectorService:
         self,
         image: Image.Image,
         confidence_threshold: float = 0.5,
-        image_size: int = 640
+        image_size: int = 320
     ) -> List[Dict[str, Any]]:
         """
         Detecta personas en una imagen usando el modelo YOLO.

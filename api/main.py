@@ -20,8 +20,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(person.router, prefix="/predict_persons", tags=["predicciones"])
-app.include_router(door.router, prefix="/predict_doors", tags=["predicciones"])
+app.include_router(person.router, prefix="/predict", tags=["predicciones"])
+app.include_router(door.router, prefix="/predict", tags=["predicciones"])
 
 
 @app.get("/")

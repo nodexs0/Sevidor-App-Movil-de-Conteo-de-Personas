@@ -16,7 +16,7 @@ from api.services.person_service import person_service
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-@router.post("/predict_persons")
+@router.post("/persons")
 async def predict_person(file: UploadFile = File(...)):
     """
     Detecta personas en una imagen usando YOLOv8

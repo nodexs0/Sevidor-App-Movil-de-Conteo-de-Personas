@@ -15,7 +15,7 @@ from api.services.door_service import door_service
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-@router.post("predict_doors")
+@router.post("/doors")
 async def predict_doors(
     file: UploadFile = File(..., description="Imagen para analizar puertas")):
     """

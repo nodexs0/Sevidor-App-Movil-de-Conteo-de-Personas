@@ -16,7 +16,7 @@ from api.services.person_service import person_service
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-@router.post("/person")
+@router.post("/predict_persons")
 async def predict_person(file: UploadFile = File(...)):
     """
     Detecta personas en una imagen usando YOLOv8
@@ -83,7 +83,7 @@ async def predict_person(file: UploadFile = File(...)):
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error en endpoint /predict/person: {e}", exc_info=True)
+        logger.error(f"Error en endpoint /predict_persons: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error interno del servidor: {str(e)}")
 
 @router.get("/person/model-info")

@@ -41,7 +41,7 @@ print("[logs] Modelo de puertas cargado correctamente")
 # -----------------------------
 # Endpoint: detección de personas
 # -----------------------------
-@app.post("/predict/person")
+@app.post("/predict_persons")
 async def predict_person(file: UploadFile = File(...), debug: bool = Query(False)):
     print(f"--"*20)
     print(f"[logs] Prediccion de persona recibida: {file.filename} (debug={debug})")
@@ -81,7 +81,7 @@ async def predict_person(file: UploadFile = File(...), debug: bool = Query(False
 # -----------------------------
 # Endpoint: detección de puertas
 # -----------------------------
-@app.post("/predict/doors")
+@app.post("/predict_doors")
 async def predict_doors(file: UploadFile = File(...), debug: bool = Query(False)):
     print(f"--"*20)
     print(f"[logs] Prediccion de puertas recibida: {file.filename} (debug={debug})")

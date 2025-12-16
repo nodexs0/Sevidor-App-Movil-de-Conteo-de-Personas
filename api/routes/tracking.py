@@ -57,7 +57,7 @@ async def start_tracking_session(
 async def process_tracking_frame(
     session_id: str = Query(..., description="ID de sesión activa"),
     file: UploadFile = File(..., description="Frame para procesar"),
-    force_detection: bool = Query(False, description="Forzar detección en este frame"),
+    force_detection: bool = Query(True, description="Forzar detección en este frame"),
     background_tasks: BackgroundTasks = None
 ):
     """
@@ -92,7 +92,7 @@ async def process_tracking_frame(
         if not session:
             raise HTTPException(status_code=404, detail="Sesión no encontrada o expirada")
         
-        run_detection = force_detection or (session.frame_count % session.detect_interval == 0)
+        run_detection = True
         
         # Procesar frame
         result = frame_tracking_service.process_frame(

@@ -52,7 +52,10 @@ class FrameTrackingService:
             self._yolo_model = YOLO(model_path)
             
             # Inicializar DeepSORT tracker
-            self._tracker = DeepSort(max_age=30)
+            self._tracker = DeepSort(
+                max_age=30,
+                n_init=1,
+                )
             
             logger.info("FrameTrackingService inicializado correctamente")
             
@@ -107,7 +110,7 @@ class FrameTrackingService:
         yolo_time = 0
         
         # Ejecutar YOLO si es necesario
-        if run_detection and (session.frame_count % session.detect_interval == 0):
+        if run_detection:
             yolo_start = time.time()
             
             # Detectar personas (solo clase 0)

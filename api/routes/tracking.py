@@ -9,7 +9,8 @@ import io
 import logging
 import time
 from typing import Optional
-
+from datetime import datetime
+import os
 from api.services.tracking_service import frame_tracking_service
 from api.services.session_manager import session_manager
 
@@ -131,6 +132,52 @@ async def get_session_stats(session_id: str):
         raise HTTPException(status_code=404, detail="Sesión no encontrada")
     
     return JSONResponse(content=stats)
+
+
+@router.post("/tracking/session/{session_id}/finalize")
+async def finalize_tracking_session(
+    session_id: str,
+    file: UploadFile = File(...),
+):
+    session = session_manager.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Sesión no encontrada")
+
+    # Guardar último frame
+    os.makedirs("reports/frames", exist_ok=True)
+    contents = await file.read()
+    frame_path = f"reports/frames/{session_id}_final.jpg"
+    with open(frame_path, "wb") as f:
+        f.write(contents)
+
+    # Congelar métricas
+    personas_dentro = session.iniciales + session.entradas - session.salidas
+
+    inicio = datetime.fromtimestamp(session.created_at)
+    fin = datetime.now()
+
+    reporte = {
+        "session_id": session_id,
+        "inicio": inicio.isoformat(),
+        "fin": fin.isoformat(),
+        "duracion_segundos": (fin - inicio).total_seconds(),
+        "entradas": session.entradas,
+        "salidas": session.salidas,
+        "personas_dentro": personas_dentro,
+        "frame_final": frame_path
+    }
+
+    # Aquí llamas TU MÓDULO DE REPORTES
+    # report_service.generate(reporte)
+
+    # Eliminar sesión
+    session_manager.delete_session(session_id)
+
+    return {
+        "success": True,
+        "reporte": reporte
+    }
+
 
 @router.delete("/tracking/session/{session_id}")
 async def end_tracking_session(session_id: str):

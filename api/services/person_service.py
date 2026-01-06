@@ -84,7 +84,7 @@ class PersonDetectorService:
     def detect_persons(
         self,
         image: Image.Image,
-        confidence_threshold: float = 0.5,
+        confidence_threshold: float = 0.8,
         image_size: int = 320
     ) -> List[Dict[str, Any]]:
         """

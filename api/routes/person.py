@@ -64,7 +64,7 @@ async def predict_person(file: UploadFile = File(...)):
         # 3. DETECCIÓN (LLAMA AL SERVICIO)
         detections = person_service.detect_persons(
             image=image,
-            confidence_threshold=0.5,
+            confidence_threshold=0.8,
             image_size=640
         )
         
